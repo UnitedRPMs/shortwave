@@ -13,7 +13,6 @@ URL:        https://gitlab.gnome.org/World/Shortwave
 Source0:    https://gitlab.gnome.org/World/Shortwave/-/archive/%{commit0}/Shortwave-%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 Patch:      drop_desktop_build.patch
 
-#BuildRequires:  vala
 BuildRequires:  meson
 BuildRequires:  ninja-build
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.14
@@ -80,6 +79,8 @@ popd
 install -Dm644 data/de.haeckerfelix.Shortwave.desktop.in %{buildroot}/%{_datadir}/applications/de.haeckerfelix.Shortwave.desktop
 install -Dm644 data/de.haeckerfelix.Shortwave.appdata.xml.in %{buildroot}/%{_datadir}/appdata/de.haeckerfelix.Shortwave.appdata.xml
 
+desktop-file-install --add-category=AudioVideo %{buildroot}/%{_datadir}/applications/de.haeckerfelix.Shortwave.desktop
+
 
 # Not yet finished
 #find_lang shortwave
@@ -103,7 +104,7 @@ fi
 %{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
-%license LICENSE.md
+%license COPYING.md
 %{_bindir}/%{name}
 %{_datadir}/glib-2.0/schemas/*
 %{_datadir}/applications/de.haeckerfelix.Shortwave.desktop
