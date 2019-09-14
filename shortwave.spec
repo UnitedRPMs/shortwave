@@ -40,6 +40,7 @@ BuildRequires:	libhandy-devel
 BuildRequires:	libdazzle-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	openssl-devel
+BuildRequires:	gcc
 
 Requires:       dconf
 Requires:       gstreamer1-plugins-base-tools
