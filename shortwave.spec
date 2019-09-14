@@ -58,7 +58,7 @@ A GTK3 app for finding and listening to internet radio stations.
 
 # We need Rust 1.39
 mkdir -p rustdir
-curl -o $PWD/ https://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.gz
+curl -O https://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.gz
 tar xmzvf rust-nightly-x86_64-unknown-linux-gnu.tar.gz -C $PWD
 chmod a+x rust-nightly-x86_64-unknown-linux-gnu/install.sh
 rust-nightly-x86_64-unknown-linux-gnu/install.sh --prefix=rustdir --disable-ldconfig --verbose
