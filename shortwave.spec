@@ -1,6 +1,6 @@
 %global debug_package %{nil}
 
-%global commit0 bf3585fd0dd690f1963ca6c4b6deb2bb6a3f4786
+%global commit0 80ba4aa1dfabf10878fe2fffe48e00a537a2c29d
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
@@ -118,7 +118,7 @@ fi
 
 %changelog
 
-* Fri Sep 13 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 7.2-7.gitbf3585f
+* Fri Sep 13 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 7.2-7.git80ba4aa
 - Updated to current commit
 
 * Sun Nov 04 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 7.2-1.git4ccfdb0
