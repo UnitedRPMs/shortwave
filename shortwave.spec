@@ -1,11 +1,11 @@
 %global debug_package %{nil}
 
-%global commit0 80ba4aa1dfabf10878fe2fffe48e00a537a2c29d
+%global commit0 e73ec4a24717e30a6745c1ef0150a57db710da3b
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:       shortwave
-Version:    7.2
+Version:    1.0.1
 Release:    7%{?gver}%{?dist}
 Summary:    Find and listen to internet radio stations
 
@@ -13,7 +13,6 @@ Group:      Applications/Internet
 License:    GPLv3
 URL:        https://gitlab.gnome.org/World/Shortwave
 Source0:    https://gitlab.gnome.org/World/Shortwave/-/archive/%{commit0}/Shortwave-%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch:      drop_desktop_build.patch
 
 BuildRequires:  meson
 BuildRequires:  ninja-build
@@ -27,11 +26,14 @@ BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:  pkgconfig(gstreamer-plugins-base-1.0)
+BuildRequires:  pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires:  intltool desktop-file-utils
 BuildRequires:  libappstream-glib-builder
 BuildRequires:	libappstream-glib-devel
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(sqlite3)
+BuildRequires:	gettext
+
 # New
 BuildRequires:	git
 BuildRequires:	libhandy-devel
@@ -68,24 +70,13 @@ rust-nightly-x86_64-unknown-linux-gnu/install.sh --prefix=rustdir --disable-ldco
 %build
 
 export PATH=$PATH:$PWD/rustdir/bin:/usr/bin
-mkdir build
-pushd build
-meson .. --prefix /usr
-%ninja_build
+%meson
+%meson_build
 
 %install
-pushd build
-%ninja_install
-popd
+%meson_install
 
-install -Dm644 data/de.haeckerfelix.Shortwave.desktop.in %{buildroot}/%{_datadir}/applications/de.haeckerfelix.Shortwave.desktop
-install -Dm644 data/de.haeckerfelix.Shortwave.appdata.xml.in %{buildroot}/%{_datadir}/appdata/de.haeckerfelix.Shortwave.appdata.xml
-
-desktop-file-install --add-category=AudioVideo %{buildroot}/%{_datadir}/applications/de.haeckerfelix.Shortwave.desktop
-
-
-# Not yet finished
-#find_lang shortwave
+%find_lang shortwave
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/de.haeckerfelix.Shortwave.desktop
@@ -105,52 +96,18 @@ fi
 %{_bindir}/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_bindir}/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
-%files
+%files -f %{name}.lang
 %license COPYING.md
 %{_bindir}/%{name}
+%{_datadir}/shortwave/
 %{_datadir}/glib-2.0/schemas/*
 %{_datadir}/applications/de.haeckerfelix.Shortwave.desktop
 %{_datadir}/icons/hicolor/*/apps/de.haeckerfelix.*
-%{_datadir}/appdata/*.appdata.xml
-#{_datadir}/locale/*/LC_MESSAGES/{name}.*
+%{_datadir}/metainfo/*.xml
 %{_datadir}/dbus-1/services/*.service
-#{_datadir}/gnome-shell/search-providers/*.ini
+
 
 %changelog
 
-* Fri Sep 13 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 7.2-7.git80ba4aa
-- Updated to current commit
-
-* Sun Nov 04 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 7.2-1.git4ccfdb0
-- Updated to 7.2-2.git4ccfdb0
-
-* Sun Jan 21 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 7.1-1.gitb3bb06b
-- Updated to 7.1-1.gitb3bb06b
-
-* Sun Dec 17 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 7.0-1.git55b6e26
-- Updated to 7.0-1.git55b6e26
-
-* Sun Sep 10 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 6.0.2-1.git73a3cc9
-- Updated to 6.0.2-1.git73a3cc9
-
-* Sun Sep 10 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 6.0-1.git3e8502a
-- Updated to 6.0-1.git3e8502a 
-
-* Sat Aug 12 2017 Pavlo Rudyi <paulcarroty at riseup.net> -  5.9-1
-- Update to the latest snapshot
-- New UI and search engine
-
-* Mon Jan 02 2017 Pavlo Rudyi <paulcarroty at riseup.net> -  5.0.0-4
-- Update to the latest snapshot
-
-* Mon Nov 07 2016 Pavlo Rudyi <paulcarroty at riseup.net> -  5.0.0-2
-- Update to 5.0.0b2
-
-* Tue Sep 27 2016 Pavlo Rudyi <paulcarroty at riseup.net> -  5.0.0-1
-- Update to the latest 5.0.0 beta 1
-
-* Tue Sep 06 2016 Pavlo Rudyi <paulcarroty at riseup.net> -  4.0.1-3
-- Update to the latest git snapshot
-
-* Fri Aug 05 2016 Pavlo Rudyi <paulcarroty at riseup> -  4.0.1-2
-- Update to the latest git snapshot
+* Mon Mar 16 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.0.1-7.gite73ec4a
+- Final release
