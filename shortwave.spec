@@ -6,7 +6,7 @@
 
 Name:       shortwave
 Version:    1.0.1
-Release:    7%{?gver}%{?dist}
+Release:    8%{?gver}%{?dist}
 Summary:    Find and listen to internet radio stations
 
 Group:      Applications/Internet
@@ -108,6 +108,9 @@ fi
 
 
 %changelog
+
+* Fri Mar 27 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.0.1-8.gite73ec4a
+- Rebuilt
 
 * Mon Mar 16 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.0.1-7.gite73ec4a
 - Final release
