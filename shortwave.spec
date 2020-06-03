@@ -1,12 +1,13 @@
 %global debug_package %{nil}
+%define _legacy_common_support 1
 
-%global commit0 e73ec4a24717e30a6745c1ef0150a57db710da3b
+%global commit0 04d8961457cc32cb99156b327798120a77e65b8d
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:       shortwave
-Version:    1.0.1
-Release:    8%{?gver}%{?dist}
+Version:    1.1.0
+Release:    7%{?gver}%{?dist}
 Summary:    Find and listen to internet radio stations
 
 Group:      Applications/Internet
@@ -33,13 +34,14 @@ BuildRequires:	libappstream-glib-devel
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:	gettext
+BuildRequires:	gcc-c++
 
 # New
 BuildRequires:	git
 BuildRequires:	libhandy-devel
 # We need Rust 1.39
-#BuildRequires:	rust 
-#BuildRequires:	cargo
+BuildRequires:	rust 
+BuildRequires:	cargo
 BuildRequires:	libdazzle-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	openssl-devel
@@ -61,15 +63,16 @@ A GTK3 app for finding and listening to internet radio stations.
 %autosetup -n Shortwave-%{commit0} -p1 
 
 # We need Rust 1.39
-mkdir -p rustdir
-curl -O https://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.gz
-tar xmzvf rust-nightly-x86_64-unknown-linux-gnu.tar.gz -C $PWD
-chmod a+x rust-nightly-x86_64-unknown-linux-gnu/install.sh
-rust-nightly-x86_64-unknown-linux-gnu/install.sh --prefix=rustdir --disable-ldconfig --verbose
+# mkdir -p rustdir
+#curl -O https://static.rust-lang.org/dist/rust-nightly-x86_64-unknown-linux-gnu.tar.gz
+#tar xmzvf rust-nightly-x86_64-unknown-linux-gnu.tar.gz -C $PWD
+#chmod a+x rust-nightly-x86_64-unknown-linux-gnu/install.sh
+#rust-nightly-x86_64-unknown-linux-gnu/install.sh --prefix=rustdir --disable-ldconfig --verbose
 
 %build
 
-export PATH=$PATH:$PWD/rustdir/bin:/usr/bin
+#export PATH=$PATH:$PWD/rustdir/bin:/usr/bin
+CFLAGS+=' -fcommon'
 %meson
 %meson_build
 
@@ -108,6 +111,9 @@ fi
 
 
 %changelog
+
+* Tue Jun 02 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.1.0-7.git04d8961
+- Updated to 1.1.0
 
 * Fri Mar 27 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.0.1-8.gite73ec4a
 - Rebuilt
