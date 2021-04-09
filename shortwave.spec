@@ -7,16 +7,21 @@
 
 Name:       shortwave
 Version:    1.1.1
-Release:    7%{?gver}%{?dist}
+Release:    8%{?gver}%{?dist}
 Summary:    Find and listen to internet radio stations
 
 Group:      Applications/Internet
 License:    GPLv3
 URL:        https://gitlab.gnome.org/World/Shortwave
 Source0:    https://gitlab.gnome.org/World/Shortwave/-/archive/%{commit0}/Shortwave-%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Patch:      https://gitlab.gnome.org/World/Shortwave/-/commit/164b18de79ebc765818ccd9b718f1527c92ba19e.patch
 
 BuildRequires:  meson
+BuildRequires:	cmake
 BuildRequires:  ninja-build
+# libhandy replaced with adwaita in 2.0.0
+# BuildRequires:  gtk4-devel
+# BuildRequires:  libadwaita-qt5-devel adwaita-qt5 libadwaita-qt5
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.14
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gstreamer-1.0)
@@ -111,6 +116,9 @@ fi
 
 
 %changelog
+
+* Thu Apr 08 2021 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.1.1-8.gitf67468a
+- Rebuilt
 
 * Mon Jun 08 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.1.1-7.gitf67468a
 - Updated to 1.1.1
