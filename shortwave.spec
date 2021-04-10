@@ -14,12 +14,13 @@ Group:      Applications/Internet
 License:    GPLv3
 URL:        https://gitlab.gnome.org/World/Shortwave
 Source0:    https://gitlab.gnome.org/World/Shortwave/-/archive/%{commit0}/Shortwave-%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch:      https://gitlab.gnome.org/World/Shortwave/-/commit/164b18de79ebc765818ccd9b718f1527c92ba19e.patch
+Patch0:     https://gitlab.gnome.org/World/Shortwave/-/commit/164b18de79ebc765818ccd9b718f1527c92ba19e.patch
+Patch1:     handy.patch
 
 BuildRequires:  meson
 BuildRequires:	cmake
 BuildRequires:  ninja-build
-# libhandy replaced with adwaita in 2.0.0
+# libhandy will replaced with adwaita in 2.0.0
 # BuildRequires:  gtk4-devel
 # BuildRequires:  libadwaita-qt5-devel adwaita-qt5 libadwaita-qt5
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.14
@@ -65,7 +66,12 @@ Obsoletes:	gradio
 A GTK3 app for finding and listening to internet radio stations.
 
 %prep 
-%autosetup -n Shortwave-%{commit0} -p1 
+%setup -n Shortwave-%{commit0} 
+%if 0%{?fedora} >= 34
+%patch0 -p1 
+%else
+%patch1 -p1 
+%endif
 
 # We need Rust 1.39
 # mkdir -p rustdir
