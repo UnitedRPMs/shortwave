@@ -1,28 +1,26 @@
 %global debug_package %{nil}
 %define _legacy_common_support 1
 
-%global commit0 f67468a56364db7729cbe1b8b696b45dc1e10f3e
+%global commit0 f660e9e63b4ef01728c55d72c4a70303c3883511
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:       shortwave
-Version:    1.1.1
-Release:    8%{?gver}%{?dist}
+Version:    2.0.0
+Release:    7%{?gver}%{?dist}
 Summary:    Find and listen to internet radio stations
 
 Group:      Applications/Internet
 License:    GPLv3
 URL:        https://gitlab.gnome.org/World/Shortwave
 Source0:    https://gitlab.gnome.org/World/Shortwave/-/archive/%{commit0}/Shortwave-%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
-Patch0:     https://gitlab.gnome.org/World/Shortwave/-/commit/164b18de79ebc765818ccd9b718f1527c92ba19e.patch
-Patch1:     handy.patch
 
 BuildRequires:  meson
 BuildRequires:	cmake
 BuildRequires:  ninja-build
 # libhandy will replaced with adwaita in 2.0.0
-# BuildRequires:  gtk4-devel
-# BuildRequires:  libadwaita-qt5-devel adwaita-qt5 libadwaita-qt5
+BuildRequires:  gtk4-devel
+BuildRequires:  libadwaita-devel
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.14
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gstreamer-1.0)
@@ -44,7 +42,7 @@ BuildRequires:	gcc-c++
 
 # New
 BuildRequires:	git
-BuildRequires:	libhandy-devel
+#BuildRequires:	libhandy-devel
 # We need Rust 1.39
 BuildRequires:	rust 
 BuildRequires:	cargo
@@ -67,11 +65,6 @@ A GTK3 app for finding and listening to internet radio stations.
 
 %prep 
 %setup -n Shortwave-%{commit0} 
-%if 0%{?fedora} >= 34
-%patch0 -p1 
-%else
-%patch1 -p1 
-%endif
 
 # We need Rust 1.39
 # mkdir -p rustdir
@@ -84,7 +77,7 @@ A GTK3 app for finding and listening to internet radio stations.
 
 #export PATH=$PATH:$PWD/rustdir/bin:/usr/bin
 CFLAGS+=' -fcommon'
-%meson
+%meson 
 %meson_build
 
 %install
@@ -123,8 +116,8 @@ fi
 
 %changelog
 
-* Thu Apr 08 2021 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.1.1-8.gitf67468a
-- Rebuilt
+* Thu Apr 15 2021 Unitedrpms Project <unitedrpms AT protonmail DOT com> 2.0.0-7.gitf660e9e
+- Updated to 2.0.0
 
 * Mon Jun 08 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 1.1.1-7.gitf67468a
 - Updated to 1.1.1
