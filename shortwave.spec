@@ -1,12 +1,12 @@
 %global debug_package %{nil}
 %define _legacy_common_support 1
 
-%global commit0 f660e9e63b4ef01728c55d72c4a70303c3883511
+%global commit0 e7041fe87d2c35e5d9107176c57bf29482b66ccc
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:       shortwave
-Version:    2.0.0
+Version:    2.0.1
 Release:    7%{?gver}%{?dist}
 Summary:    Find and listen to internet radio stations
 
@@ -115,6 +115,9 @@ fi
 
 
 %changelog
+
+* Fri May 07 2021 Unitedrpms Project <unitedrpms AT protonmail DOT com> 2.0.1-7.gite7041fe
+- Updated to 2.0.1
 
 * Thu Apr 15 2021 Unitedrpms Project <unitedrpms AT protonmail DOT com> 2.0.0-7.gitf660e9e
 - Updated to 2.0.0
